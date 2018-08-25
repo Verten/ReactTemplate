@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-import { API, initError, constructFetchConfig } from '../../../utilities'
+import { API, initError, constructFetchConfig, httpMethod } from '../../../utilities'
 
 export const USER_LOGIN: string = 'react-template/USER_LOGIN'
 export const USER_LOGIN_SUCCESS: string = 'react-template/USER_LOGIN_SUCCESS'
@@ -17,7 +17,7 @@ interface IActionType {
   error?: object
 }
 
-interface ILoginState {
+export interface ILoginState {
   username: string | undefined
   password: string | undefined
   userInfo: object | undefined | null
@@ -88,7 +88,7 @@ export const loginError = function(error: object): IActionType {
 
 // saga
 function* loginSaga(action: IActionType) {
-  const { url, config } = constructFetchConfig(userLoginApi[action.type], 'POST', {
+  const { url, config } = constructFetchConfig(userLoginApi[action.type], httpMethod.POST, {
     email: action.username,
     password: action.password,
   })
@@ -96,7 +96,7 @@ function* loginSaga(action: IActionType) {
     const payload = yield call(API, url, config)
     yield put(loginSuccess(payload))
   } catch (error) {
-    yield put(error(yield call(initError, url, error)))
+    yield put(loginError(yield call(initError, url, error)))
   }
 }
 

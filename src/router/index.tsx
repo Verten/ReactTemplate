@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Route, Switch } from 'react-router-dom'
-import LoginPage from '../pages/Login/index.tsx'
+import LoginPage from '../pages/Login'
 
 const routers = (
   <Switch>

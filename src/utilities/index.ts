@@ -90,20 +90,28 @@ export function initError(url, error) {
 *         constructFetchConfig('url', POST', {param1: '1', param2: '2'})
 *
 */
-// interface httpConfig {
-//   mode: string
-//   credentials: string
-//   headers: object
-//   method?: string
-//   body?: string
-// }
+interface httpConfig {
+  mode: string
+  credentials: string
+  headers: object
+  method?: string
+  body?: string
+}
 
-// interface IConfig {
-//   config: httpConfig
-//   url: string
-// }
-export function constructFetchConfig(url, method, parameter) {
-  const config = {
+interface IConfig {
+  config: httpConfig
+  url: string
+}
+
+export enum httpMethod {
+  GET = 'GET',
+  POST = 'POST',
+  DELETE = 'DELETE',
+  PUT = 'PUT',
+}
+
+export function constructFetchConfig(url: string, method: httpMethod, parameter: object): IConfig {
+  const config: httpConfig = {
     mode: 'cors',
     credentials: 'include',
     headers: {
@@ -112,7 +120,7 @@ export function constructFetchConfig(url, method, parameter) {
     },
   }
   let queryString = '?'
-  const httpMethod = ['GET', 'POST', 'DELETE', 'PUT']
+  const httpMethod: string[] = ['GET', 'POST', 'DELETE', 'PUT']
   if (httpMethod.every(method => method !== method.toUpperCase())) {
     console.error('invalid http method')
   } else {

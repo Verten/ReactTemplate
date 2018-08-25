@@ -41,10 +41,16 @@
     "redux-saga": "^0.16.0"
   },
   "devDependencies": {
-    "@types/node": "^10.3.4",
+    "@types/lodash": "^4.14.116",
+    "@types/node": "^10.9.2",
     "@types/react": "^16.4.1",
     "@types/react-dom": "^16.0.6",
+    "@types/react-redux": "^6.0.6",
     "@types/react-router-dom": "^4.2.7",
+    "@types/redux": "^3.6.0",
+    "@types/redux-logger": "^3.0.6",
+    "@types/redux-saga": "^0.10.5",
+    "@types/webpack-env": "^1.13.6",
     "babel-loader": "^7.1.4",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
