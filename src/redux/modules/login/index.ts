@@ -1,12 +1,13 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-import { API, initError, constructFetchConfig, httpMethod } from '../../../utilities'
+import { API, constructFetchConfig, httpMethod, initError } from '../../../utilities'
+import { API_CONTEXT_PATH } from '../../../constants'
 
 export const USER_LOGIN: string = 'react-template/USER_LOGIN'
 export const USER_LOGIN_SUCCESS: string = 'react-template/USER_LOGIN_SUCCESS'
 export const USER_LOGIN_FAILED: string = 'react-template/USER_LOGIN_FAILED'
 
 const userLoginApi: object = {
-  [USER_LOGIN]: '/api/login',
+  [USER_LOGIN]: `${API_CONTEXT_PATH}/login`,
 }
 
 interface IActionType {
@@ -33,7 +34,7 @@ const initialState: ILoginState = {
   loginSuccess: false,
 }
 
-//reducer
+// reducer
 export default (state: ILoginState = initialState, action: IActionType): ILoginState => {
   switch (action.type) {
     case USER_LOGIN:
@@ -64,7 +65,7 @@ export default (state: ILoginState = initialState, action: IActionType): ILoginS
 }
 
 // action
-export const login = function(username: string, password: string): IActionType {
+export const login = (username: string, password: string): IActionType => {
   return {
     type: USER_LOGIN,
     username,
@@ -72,14 +73,14 @@ export const login = function(username: string, password: string): IActionType {
   }
 }
 
-export const loginSuccess = function(payload: object): IActionType {
+export const loginSuccess = (payload: object): IActionType => {
   return {
     type: USER_LOGIN_SUCCESS,
     payload,
   }
 }
 
-export const loginError = function(error: object): IActionType {
+export const loginError = (error: object): IActionType => {
   return {
     type: USER_LOGIN_FAILED,
     error,
@@ -88,10 +89,11 @@ export const loginError = function(error: object): IActionType {
 
 // saga
 function* loginSaga(action: IActionType) {
-  const { url, config } = constructFetchConfig(userLoginApi[action.type], httpMethod.POST, {
+  const { url, config } = constructFetchConfig(userLoginApi[action.type], httpMethod.GET, {
     email: action.username,
     password: action.password,
   })
+  config.method = httpMethod.POST
   try {
     const payload = yield call(API, url, config)
     yield put(loginSuccess(payload))

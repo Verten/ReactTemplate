@@ -20,7 +20,8 @@ exports.paths = {
   e2e: 'e2e',
   tasks: 'gulp_tasks',
   build: 'build',
-  public: 'public'
+  public: 'public',
+  publicUrl: '/',
 }
 
 /**

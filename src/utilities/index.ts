@@ -90,7 +90,7 @@ export function initError(url, error) {
 *         constructFetchConfig('url', POST', {param1: '1', param2: '2'})
 *
 */
-interface httpConfig {
+interface IHttpConfig {
   mode: string
   credentials: string
   headers: object
@@ -99,7 +99,7 @@ interface httpConfig {
 }
 
 interface IConfig {
-  config: httpConfig
+  config: IHttpConfig
   url: string
 }
 
@@ -111,7 +111,7 @@ export enum httpMethod {
 }
 
 export function constructFetchConfig(url: string, method: httpMethod, parameter: object): IConfig {
-  const config: httpConfig = {
+  const config: IHttpConfig = {
     mode: 'cors',
     credentials: 'include',
     headers: {
@@ -119,16 +119,17 @@ export function constructFetchConfig(url: string, method: httpMethod, parameter:
       'Content-Type': 'application/json',
     },
   }
-  let queryString = '?'
-  const httpMethod: string[] = ['GET', 'POST', 'DELETE', 'PUT']
-  if (httpMethod.every(method => method !== method.toUpperCase())) {
+  let queryString: string = ''
+  const httpMethodList: string[] = ['GET', 'POST', 'DELETE', 'PUT']
+  if (httpMethodList.every(tmpMethod => tmpMethod !== method.toUpperCase())) {
     console.error('invalid http method')
   } else {
     config.method = method.toUpperCase()
     const keys = Object.keys(parameter)
     if (method.toUpperCase() === 'GET') {
-      keys.forEach(key => (queryString += `${queryString}${key}=${parameter[key]}`))
-      console.info(url + queryString)
+      keys.forEach(key => (queryString = `${queryString}&${key}=${parameter[key]}`))
+      queryString = queryString.slice(1)
+      console.info(`${url}?${queryString}`)
     } else {
       const payload = {}
       keys.forEach(key => (payload[key] = parameter[key]))
@@ -137,6 +138,6 @@ export function constructFetchConfig(url: string, method: httpMethod, parameter:
   }
   return {
     config,
-    url,
+    url: `${url}?${queryString}`,
   }
 }

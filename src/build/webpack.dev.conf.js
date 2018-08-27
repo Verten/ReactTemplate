@@ -7,9 +7,14 @@ const DevConfig = {
   ...BaseConfig,
 }
 
+const publicPath = (publicUrl = `${conf.paths.publicUrl}`)
+
 DevConfig.plugins.push(
   new webpack.DefinePlugin({
-    'process.env.NODE_ENV': '"development"',
+    'process.env': {
+      NODE_ENV: '"development"',
+      PUBLIC_URL: `${publicUrl}`,
+    },
   }),
 )
 
@@ -24,7 +29,7 @@ Object.assign(DevConfig, {
   entry: ['webpack-hot-middleware/client', `babel-polyfill`, `./${conf.path.src('index')}`],
   output: {
     path: path.join(process.cwd(), conf.paths.tmp),
-    publicPath: '/',
+    publicPath: `${publicPath}`,
     filename: 'app.[hash].js',
   },
 })

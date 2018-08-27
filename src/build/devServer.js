@@ -1,6 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const express = require('express')
+const proxy = require('http-proxy-middleware')
 const devMiddleware = require('webpack-dev-middleware')
 const hotMiddleware = require('webpack-hot-middleware')
 const conf = require('./conf')
@@ -18,6 +19,18 @@ app.use(
 )
 
 app.use(hotMiddleware(compiler))
+
+// development proxy
+app.use(
+  '/api',
+  proxy({
+    target: 'http://localhost:4000/',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/api': '/',
+    },
+  }),
+)
 
 app.use('/', express.static(process.cwd() + `${conf.paths.public}`))
 

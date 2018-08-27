@@ -13,11 +13,7 @@ export class LoginPage extends React.Component<ILoginProps, {}> {
     this.handleLogin = this.handleLogin.bind(this)
   }
 
-  handleLogin(): void {
-    this.props.actions.login('abc', 'abc')
-  }
-
-  render() {
+  public render() {
     return (
       <div>
         Login Page
@@ -25,6 +21,11 @@ export class LoginPage extends React.Component<ILoginProps, {}> {
       </div>
     )
   }
+
+  protected handleLogin(): void {
+    this.props.actions.login('abc', 'abc')
+  }
+
 }
 
 const mapStateToProps = state => ({})
