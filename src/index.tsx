@@ -1,20 +1,19 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
-import { BrowserRouter as Router } from 'react-router-dom'
 import registerServiceWorker from './registerServiceWorker'
-import createStore from './redux/createStore'
-import routers from './router'
-const store = createStore({})
+import App from './App'
 
-const renderApp = (store, routers) => {
-  ReactDOM.render(
-    <Provider store={store}>
-      <Router>{routers}</Router>
-    </Provider>,
-    document.getElementById('root'),
-  )
+const renderApp = () => {
+  ReactDOM.render(<App />, document.getElementById('root'))
 }
 
-renderApp(store, routers)
+renderApp()
 registerServiceWorker()
+
+// if (module.hot) {
+//   module.hot.accept(() => {
+//     renderApp()
+//   })
+// }
+// https://github.com/reduxjs/react-redux/issues/356#issuecomment-302298695
+// https://blog.csdn.net/dengdengda/article/details/78746208

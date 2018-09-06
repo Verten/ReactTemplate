@@ -18,15 +18,36 @@ DevConfig.plugins.push(
   }),
 )
 
-DevConfig.module.rules.push({
-  test: /(\.css|\.scss)$/,
-  use: 'style-loader!css-loader!postcss-loader!sass-loader',
-})
+DevConfig.module.rules.push(
+  {
+    test: /(\.css|\.scss)$/,
+    use: 'style-loader!css-loader!postcss-loader!sass-loader',
+  },
+  {
+    test: /\.tsx?$/,
+    use: [
+      {
+        loader: 'babel-loader',
+        options: {
+          cacheDirectory: true,
+          plugins: ['react-hot-loader/babel'],
+        },
+      },
+      'ts-loader',
+    ],
+    exclude: /node_modules/,
+  },
+  {
+    test: /\.jsx?$/,
+    exclude: /node_modules/,
+    use: 'babel-loader',
+  },
+)
 
 Object.assign(DevConfig, {
   mode: 'development',
   devtool: '#source-map',
-  entry: [`babel-polyfill`, `./${conf.path.src('index')}`],
+  entry: [`babel-polyfill`, 'react-hot-loader/patch', `./${conf.path.src('index')}`],
   output: {
     path: path.join(process.cwd(), conf.paths.tmp),
     publicPath: `${publicPath}`,
