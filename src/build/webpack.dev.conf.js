@@ -26,11 +26,16 @@ DevConfig.module.rules.push({
 Object.assign(DevConfig, {
   mode: 'development',
   devtool: '#source-map',
-  entry: ['webpack-hot-middleware/client', `babel-polyfill`, `./${conf.path.src('index')}`],
+  entry: [`babel-polyfill`, `./${conf.path.src('index')}`],
   output: {
     path: path.join(process.cwd(), conf.paths.tmp),
     publicPath: `${publicPath}`,
     filename: 'app.[hash].js',
+  },
+  devServer: {
+    port: 3000,
+    hot: true,
+    historyApiFallback: true,
   },
 })
 

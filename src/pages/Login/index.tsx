@@ -25,7 +25,6 @@ export class LoginPage extends React.Component<ILoginProps, {}> {
   protected handleLogin(): void {
     this.props.actions.login('abc', 'abc')
   }
-
 }
 
 const mapStateToProps = state => ({})
