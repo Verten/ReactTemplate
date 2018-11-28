@@ -14,7 +14,7 @@ DevConfig.plugins.push(
   new webpack.DefinePlugin({
     'process.env': {
       NODE_ENV: '"production"',
-      PUBLIC_URL: `${publicUrl}`,
+      PUBLIC_URL: `"${publicUrl}"`,
     },
   }),
 )
