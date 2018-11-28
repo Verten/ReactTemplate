@@ -16,7 +16,7 @@ export class LoginPage extends React.Component<ILoginProps, {}> {
   public render() {
     return (
       <div>
-        Login Page
+        Login Page!!!!!!
         <button onClick={this.handleLogin}>Login</button>
       </div>
     )
@@ -25,7 +25,6 @@ export class LoginPage extends React.Component<ILoginProps, {}> {
   protected handleLogin(): void {
     this.props.actions.login('abc', 'abc')
   }
-
 }
 
 const mapStateToProps = state => ({})
